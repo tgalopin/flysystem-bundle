@@ -12,8 +12,9 @@
 namespace League\FlysystemBundle\DependencyInjection;
 
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
-use League\Flysystem\PluginInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\FilesystemReader;
+use League\Flysystem\FilesystemWriter;
 use League\FlysystemBundle\Adapter\AdapterDefinitionFactory;
 use League\FlysystemBundle\Lazy\LazyFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -35,11 +36,6 @@ class FlysystemExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container
-            ->registerForAutoconfiguration(PluginInterface::class)
-            ->addTag('flysystem.plugin')
-        ;
-
-        $container
             ->setDefinition('flysystem.adapter.lazy.factory', new Definition(LazyFactory::class))
             ->setPublic(false)
         ;
@@ -57,7 +53,9 @@ class FlysystemExtension extends Extension
                 $container->setDefinition($storageName, $this->createLazyStorageDefinition($storageName, $storageConfig['options']));
 
                 // Register named autowiring alias
-                $container->registerAliasForArgument($storageName, FilesystemInterface::class, $storageName)->setPublic(false);
+                $container->registerAliasForArgument($storageName, FilesystemOperator::class, $storageName)->setPublic(false);
+                $container->registerAliasForArgument($storageName, FilesystemReader::class, $storageName)->setPublic(false);
+                $container->registerAliasForArgument($storageName, FilesystemWriter::class, $storageName)->setPublic(false);
 
                 continue;
             }
@@ -78,7 +76,9 @@ class FlysystemExtension extends Extension
             );
 
             // Register named autowiring alias
-            $container->registerAliasForArgument($storageName, FilesystemInterface::class, $storageName)->setPublic(false);
+            $container->registerAliasForArgument($storageName, FilesystemOperator::class, $storageName)->setPublic(false);
+            $container->registerAliasForArgument($storageName, FilesystemReader::class, $storageName)->setPublic(false);
+            $container->registerAliasForArgument($storageName, FilesystemWriter::class, $storageName)->setPublic(false);
         }
     }
 
@@ -88,7 +88,7 @@ class FlysystemExtension extends Extension
         $resolver->setRequired('source');
         $resolver->setAllowedTypes('source', 'string');
 
-        $definition = new Definition(FilesystemInterface::class);
+        $definition = new Definition(FilesystemOperator::class);
         $definition->setPublic(false);
         $definition->setFactory([new Reference('flysystem.adapter.lazy.factory'), 'createStorage']);
         $definition->setArgument(0, $resolver->resolve($options)['source']);

@@ -11,7 +11,7 @@
 
 namespace League\FlysystemBundle\Adapter\Builder;
 
-use League\Flysystem\Adapter\Ftp;
+use League\Flysystem\FTP\FtpAdapter;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +29,9 @@ class FtpAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
 
     protected function getRequiredPackages(): array
     {
-        return [];
+        return [
+            FtpAdapter::class => 'league/flysystem-ftp',
+        ];
     }
 
     protected function configureOptions(OptionsResolver $resolver)
@@ -70,7 +72,7 @@ class FtpAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
         $options['ignorePassiveAddress'] = $options['ignore_passive_address'];
         unset($options['ignore_passive_address']);
 
-        $definition->setClass(Ftp::class);
+        $definition->setClass(FtpAdapter::class);
         $definition->setArgument(0, $options);
     }
 }

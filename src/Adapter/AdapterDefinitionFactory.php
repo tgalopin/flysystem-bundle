@@ -31,19 +31,10 @@ class AdapterDefinitionFactory
         $this->builders = [
             new Builder\AsyncAwsAdapterDefinitionBuilder(),
             new Builder\AwsAdapterDefinitionBuilder(),
-            new Builder\AzureAdapterDefinitionBuilder(),
-            new Builder\CacheAdapterDefinitionBuilder(),
-            new Builder\DropboxAdapterDefinitionBuilder(),
             new Builder\FtpAdapterDefinitionBuilder(),
-            new Builder\GcloudAdapterDefinitionBuilder(),
             new Builder\LocalAdapterDefinitionBuilder(),
             new Builder\MemoryAdapterDefinitionBuilder(),
-            new Builder\NullAdapterDefinitionBuilder(),
-            new Builder\RackspaceAdapterDefinitionBuilder(),
-            new Builder\ReplicateAdapterDefinitionBuilder(),
             new Builder\SftpAdapterDefinitionBuilder(),
-            new Builder\WebdavAdapterDefinitionBuilder(),
-            new Builder\ZipAdapterDefinitionBuilder(),
         ];
     }
 

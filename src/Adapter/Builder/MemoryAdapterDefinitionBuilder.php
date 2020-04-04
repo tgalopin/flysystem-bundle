@@ -11,7 +11,7 @@
 
 namespace League\FlysystemBundle\Adapter\Builder;
 
-use League\Flysystem\Memory\MemoryAdapter;
+use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,7 +30,7 @@ class MemoryAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
     protected function getRequiredPackages(): array
     {
         return [
-            MemoryAdapter::class => 'league/flysystem-memory',
+            InMemoryFilesystemAdapter::class => 'league/flysystem-memory',
         ];
     }
 
@@ -40,6 +40,6 @@ class MemoryAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
 
     protected function configureDefinition(Definition $definition, array $options)
     {
-        $definition->setClass(MemoryAdapter::class);
+        $definition->setClass(InMemoryFilesystemAdapter::class);
     }
 }

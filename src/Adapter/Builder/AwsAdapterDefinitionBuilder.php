@@ -11,7 +11,7 @@
 
 namespace League\FlysystemBundle\Adapter\Builder;
 
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\AwsS3V3\AwsS3V3Filesystem;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +31,7 @@ class AwsAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
     protected function getRequiredPackages(): array
     {
         return [
-            AwsS3Adapter::class => 'league/flysystem-aws-s3-v3',
+            AwsS3V3Filesystem::class => 'league/flysystem-aws-s3-v3',
         ];
     }
 
@@ -45,17 +45,13 @@ class AwsAdapterDefinitionBuilder extends AbstractAdapterDefinitionBuilder
 
         $resolver->setDefault('prefix', '');
         $resolver->setAllowedTypes('prefix', 'string');
-
-        $resolver->setDefault('options', []);
-        $resolver->setAllowedTypes('options', 'array');
     }
 
     protected function configureDefinition(Definition $definition, array $options)
     {
-        $definition->setClass(AwsS3Adapter::class);
+        $definition->setClass(AwsS3V3Filesystem::class);
         $definition->setArgument(0, new Reference($options['client']));
         $definition->setArgument(1, $options['bucket']);
         $definition->setArgument(2, $options['prefix']);
-        $definition->setArgument(3, $options['options']);
     }
 }
