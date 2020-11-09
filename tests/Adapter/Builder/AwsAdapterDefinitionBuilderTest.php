@@ -62,6 +62,7 @@ class AwsAdapterDefinitionBuilderTest extends TestCase
             'options' => [
                 'ServerSideEncryption' => 'AES256',
             ],
+            'streamReads' => false,
         ]);
 
         $this->assertSame(AwsS3Adapter::class, $definition->getClass());
@@ -70,5 +71,6 @@ class AwsAdapterDefinitionBuilderTest extends TestCase
         $this->assertSame('bucket', $definition->getArgument(1));
         $this->assertSame('prefix/path', $definition->getArgument(2));
         $this->assertSame(['ServerSideEncryption' => 'AES256'], $definition->getArgument(3));
+        $this->assertFalse($definition->getArgument(4));
     }
 }
