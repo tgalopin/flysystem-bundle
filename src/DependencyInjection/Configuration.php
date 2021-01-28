@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->defaultValue([])
                             ->end()
-                            ->scalarNode('visibility')->defaultNull()->end()
+                            ->scalarNode('visibility')->defaultValue('public')->end()
                             ->booleanNode('case_sensitive')->defaultTrue()->end()
                             ->booleanNode('disable_asserts')->defaultFalse()->end()
                         ->end()
