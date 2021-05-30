@@ -46,6 +46,9 @@ flysystem:
                     dir:
                         public: 0755
                         private: 0700
+            visibility: ~ # default null. Possible values are 'public' or 'private'
+            case_sensitive: true
+            disable_asserts: false
 
         users6.storage:
             adapter: 'memory'
